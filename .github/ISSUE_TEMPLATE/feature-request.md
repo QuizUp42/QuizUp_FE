@@ -1,6 +1,6 @@
 ---
 name: "✨ 기능 제안 (Feature)"
-about: 새로운 기능 작업 이슈슈
+about: 새로운 기능 작업 이슈
 title: "[FEAT] "
 labels: ["FEAT"]
 ---
