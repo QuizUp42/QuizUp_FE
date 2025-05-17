@@ -1,5 +1,8 @@
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/routes";
+
 const App = () => {
-  return <div className="bg-primary-accent">app</div>;
+  return <RouterProvider router={router} />;
 };
 
 export default App;
