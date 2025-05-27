@@ -3,12 +3,15 @@
 @theme {
   --color-primary-base: #121525;
   --color-primary-dark: #14182f;
+  --color-primary-border: #262a3f;
   --color-primary-light: #2e3248;
+  --color-primary-muted: #858aad;
   --color-primary-soft: #a7abc9;
   --color-primary-accent: #89b0f2;
   --color-primary-white: #ffffff;
 
   --color-system-text: #7a7373;
+  --color-system-accent: #e2d1c1;
   --color-system-button: #311c9d;
   --color-system-gold: #ffee33;
   --color-system-silver: #aeb6c7;
