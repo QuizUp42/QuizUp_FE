@@ -1,21 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import { EVENTS } from "@/libs/constants/socketEvents";
-
-/**
- * WebSocket 커스텀 훅
- * @param {'teacher' | 'student'} role 로그인한 사용자 역할
- * @param {string} roomId 방 ID
- * @param {string} username 사용자 이름
- * @returns { messages, sendMessage, socketRef }
- */
+import { EVENTS } from "../libs/constants/socketEvents";
 
 export const useSocket = (role, roomId, username, token) => {
   const socketRef = useRef(null);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const baseUrl = "https://6432-112-166-124-75.ngrok-free.app";
+    const baseUrl = "https://a936-112-166-124-97.ngrok-free.app";
     const namespace = role === "teacher" ? "teachers" : "students";
     const socket = io(`${baseUrl}/${namespace}`, {
       transports: ["websocket"],
@@ -54,7 +46,7 @@ export const useSocket = (role, roomId, username, token) => {
 
   const sendMessage = (text) => {
     if (!text.trim()) return;
-    socketRef.current?.emit(EVENTS.CHAT_MESSAGE, {
+    socketRef.current?.emit(EVENTS.CHAT_SEND, {
       room: roomId,
       text,
     });

@@ -5,11 +5,11 @@ import ChatMessages from "../../../components/mobile/chat/ChatMessages";
 import { useSocket } from "../../../hooks/useSocket";
 
 const MobileChat = () => {
-  const role = useState("teachers");
-  const [username] = useState("슬픈 고양이"); // 추후 받아옴
-  const [roomId] = useState("0BLHYG"); // 추후 받아옴
+  const [role] = useState("student");
+  const [username] = useState("11"); // 추후 받아옴
+  const [roomId] = useState("H94DZX"); // 추후 받아옴
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiMjIiLCJyb2xlIjoicHJvZmVzc29yIiwiaWF0IjoxNzQ4MjQwNjU0LCJleHAiOjE3NDgyNDQyNTR9.4Buu6FSpZH-1xCA3tF-OUhuSbJE1u5l2mFBcGlqzwP4";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiMTEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc0ODU4MjIwMiwiZXhwIjoxNzQ4NTg1ODAyfQ.FgqkutAeLCPcqdfVqPDyDIjKHfdtF3S_feIttlI0pss";
 
   const { messages, sendMessage } = useSocket(role, roomId, username, token);
 
