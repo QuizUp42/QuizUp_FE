@@ -9,6 +9,7 @@ export const useSocket = (role, roomId, username, token) => {
   useEffect(() => {
     const baseUrl = "https://a936-112-166-124-97.ngrok-free.app";
     const namespace = role === "teacher" ? "teachers" : "students";
+    console.log("주소", namespace);
     const socket = io(`${baseUrl}/${namespace}`, {
       transports: ["websocket"],
       auth: { token },
