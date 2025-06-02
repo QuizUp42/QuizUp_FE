@@ -36,6 +36,10 @@ export const useSocket = (role, roomId, username, token) => {
       setMessages((prev) => [...prev, msg]);
     });
 
+    socket.on(EVENTS.CHECK_CREATED, (msg) => {
+      console.log("✅ 새 체크 메세지", msg);
+    });
+
     socket.onAny((event, ...args) => {
       console.log("[디버깅] 받은 이벤트:", event, args);
     });
@@ -53,9 +57,16 @@ export const useSocket = (role, roomId, username, token) => {
     });
   };
 
+  const sendCheck = () => {
+    socketRef.current?.emit(EVENTS.CHECK_CREATE, {
+      room: roomId,
+    });
+  };
+
   return {
     messages,
     sendMessage,
     socketRef,
+    sendCheck,
   };
 };
