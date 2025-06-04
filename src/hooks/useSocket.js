@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { EVENTS } from "../libs/constants/socketEvents";
 
-export const useSocket = (role, roomId, username, token) => {
+export const useSocket = (role, roomId, token) => {
   const socketRef = useRef(null);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const baseUrl = "https://a936-112-166-124-97.ngrok-free.app";
-    const namespace = role === "teacher" ? "teachers" : "students";
+    const baseUrl = import.meta.env.VITE_API_SOCKET_URL;
+    const namespace = role === "professor" ? "teachers" : "students";
     console.log("주소", namespace);
     const socket = io(`${baseUrl}/${namespace}`, {
       transports: ["websocket"],
@@ -19,7 +19,7 @@ export const useSocket = (role, roomId, username, token) => {
 
     socket.on("connect", () => {
       console.log("✅ 연결됨:", socket.id);
-      socket.emit(EVENTS.ROOM_JOIN, { room: roomId, username });
+      socket.emit(EVENTS.ROOM_JOIN, { room: roomId });
     });
 
     socket.on(EVENTS.ROOM_JOINED, (room) => {
@@ -47,7 +47,7 @@ export const useSocket = (role, roomId, username, token) => {
     return () => {
       socket.disconnect();
     };
-  }, [role, roomId, username, token]);
+  }, [role, roomId, token]);
 
   const sendMessage = (text) => {
     if (!text.trim()) return;

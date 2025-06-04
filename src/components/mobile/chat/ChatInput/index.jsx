@@ -26,7 +26,7 @@ const ChatInput = ({ role, onSend, onCheck }) => {
   return (
     <div className="p-3 relative">
       <div className="flex items-center px-3 py-1.5 gap-2 text-primary-soft border border-primary-border rounded-xl">
-        {role === "teacher" ? (
+        {role === "professor" ? (
           <AiOutlinePlusCircle
             className={`w-5 h-5 cursor-pointer transition-transform duration-300 ${
               isModalOpen ? "rotate-45" : ""

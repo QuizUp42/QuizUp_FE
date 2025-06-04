@@ -4,6 +4,7 @@ import MessageTeacherText from "../message/TeacherText";
 import MessageSystem from "../message/System";
 
 const ChatMessages = ({ messages }) => {
+  console.log(messages);
   return (
     <div className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
       {messages.map((msg) => {
@@ -21,21 +22,21 @@ const ChatMessages = ({ messages }) => {
           return <MessageTeacherText key={msg.id} text={msg.message} />;
         }
 
-        // if (msg.type === "image") {
-        //   return (
-        //     <MessageImage
-        //       key={msg.id}
-        //       name={msg.name}
-        //       image={msg.image}
-        //       time={msg.time}
-        //       sender={msg.sender}
-        //     />
-        //   );
-        // }
+        if (msg.type === "image") {
+          return (
+            <MessageImage
+              key={msg.id}
+              name={msg.name}
+              image={msg.image}
+              time={msg.time}
+              sender={msg.sender}
+            />
+          );
+        }
 
-        // if (msg.type === "system") {
-        //   return <MessageSystem key={msg.id} text={msg.text} time={msg.time} />;
-        // }
+        if (msg.type === "system") {
+          return <MessageSystem key={msg.id} text={msg.text} time={msg.time} />;
+        }
 
         return null;
       })}
