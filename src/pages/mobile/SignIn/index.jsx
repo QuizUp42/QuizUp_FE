@@ -2,12 +2,14 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import publicInstance from "../../../libs/instance/publicInstance";
 import { useState } from "react";
+import { useRoomStore } from "../../../stores/useRoomStore";
 
 const MobileSignIn = () => {
   const navigate = useNavigate();
+  const roomCode = useRoomStore((state) => state.roomCode);
+  console.log(roomCode);
 
   const [form, setForm] = useState({
-    role: "student",
     studentNo: "",
     password: "",
   });
@@ -25,8 +27,17 @@ const MobileSignIn = () => {
     try {
       const res = await publicInstance.post("/auth/login", form);
       const token = res.data.accessToken;
+      const role = res.data.role;
+
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+
       alert("로그인 성공!", res);
+      if (role === "student") {
+        navigate(`/mobile/${roomCode}/nickname`);
+      } else if (role === "professor") {
+        navigate(`/mobile/${roomCode}/chat`);
+      }
     } catch (err) {
       alert("로그인 실패..", err);
     }
