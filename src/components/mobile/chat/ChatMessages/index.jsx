@@ -2,30 +2,63 @@ import MessageImage from "../message/Image";
 import MessageStudentText from "../message/StudentText";
 import MessageTeacherText from "../message/TeacherText";
 import MessageSystem from "../message/System";
+import MessageCheck from "../message/Check";
 
-const ChatMessages = ({ messages }) => {
+// const messages = [
+//   {
+//     id: 1,
+//     type: "check",
+//     count: 3,
+//     role: "student",
+//     isChecked: true,
+//   },
+//   {
+//     id: 2,
+//     type: "check",
+//     count: 10,
+//     role: "professor",
+//     isChecked: false,
+//   },
+// ];
+
+const ChatMessages = ({ messages, toggleCheck }) => {
   console.log(messages);
   return (
     <div className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
       {messages.map((msg) => {
-        if (msg.role === "student") {
+        const key = `${msg.type}-${msg.id}`;
+
+        if (msg.type === "chat" && msg.role === "student") {
           return (
             <MessageStudentText
-              key={msg.id}
+              key={key}
               name={msg.username}
               text={msg.message}
             />
           );
         }
 
-        if (msg.role === "professor") {
+        if (msg.type === "chat" && msg.role === "professor") {
           return <MessageTeacherText key={msg.id} text={msg.message} />;
+        }
+
+        if (msg.type === "check") {
+          return (
+            <MessageCheck
+              key={key}
+              id={msg.id}
+              isChecked={msg.isChecked}
+              count={msg.checkCount}
+              role={msg.role}
+              toggleCheck={toggleCheck}
+            />
+          );
         }
 
         if (msg.type === "image") {
           return (
             <MessageImage
-              key={msg.id}
+              key={key}
               name={msg.name}
               image={msg.image}
               time={msg.time}
