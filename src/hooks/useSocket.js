@@ -55,6 +55,25 @@ export const useSocket = (role, roomId, token) => {
       );
     });
 
+    socket.on(EVENTS.OXQUIZ_CREATED, (msg) => {
+      console.log("✅ 새 O/X 메세지", msg);
+      setMessages((prev) => [...prev, { ...msg, type: "oxquiz" }]);
+    });
+
+    socket.on(EVENTS.OXQUIZ_ANSWERED, (msg) => {
+      console.log("✅ o/x 메세지 업데이트", msg);
+      const { id, xCount, oCount } = msg;
+
+      setMessages((prevMessages) =>
+        prevMessages.map((m) => {
+          if (m.type === "oxquiz" && m.id === id) {
+            return { ...m, xCount, oCount };
+          }
+          return m;
+        })
+      );
+    });
+
     socket.onAny((event, ...args) => {
       console.log("[디버깅] 받은 이벤트:", event, args);
     });
@@ -86,11 +105,27 @@ export const useSocket = (role, roomId, token) => {
     });
   };
 
+  const sendOXQuiz = () => {
+    socketRef.current?.emit(EVENTS.OXQUIZ_CREATE, {
+      room: roomId,
+    });
+  };
+
+  const toggleOXQuiz = (id, isChecked) => {
+    socketRef.current?.emit(EVENTS.OXQUIZ_ANSWER, {
+      room: roomId,
+      quizId: id,
+      answer: isChecked,
+    });
+  };
+
   return {
     messages,
     sendMessage,
     socketRef,
     sendCheck,
     toggleCheck,
+    sendOXQuiz,
+    toggleOXQuiz,
   };
 };
