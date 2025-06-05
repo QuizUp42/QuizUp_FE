@@ -19,6 +19,7 @@ const MobileChat = () => {
     toggleCheck,
     sendOXQuiz,
     toggleOXQuiz,
+    sendDraw,
   } = useSocket(role, roomId, token);
 
   return (
@@ -33,6 +34,7 @@ const MobileChat = () => {
         onSend={sendMessage}
         onCheck={sendCheck}
         onOXQuiz={sendOXQuiz}
+        onDraw={sendDraw}
       />
     </div>
   );
