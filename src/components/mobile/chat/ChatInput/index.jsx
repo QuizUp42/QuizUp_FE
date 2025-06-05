@@ -6,7 +6,7 @@ import checkIcon from "../../../../assets/check_icon.png";
 import oxIcon from "../../../../assets/ox_icon.png";
 import randomIcon from "../../../../assets/random_icon.png";
 
-const ChatInput = ({ role, onSend, onCheck, onOXQuiz }) => {
+const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw }) => {
   const [text, setText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,7 +65,12 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz }) => {
             className="cursor-pointer"
             onClick={onOXQuiz}
           />
-          <img src={randomIcon} alt="random" className="cursor-pointer" />
+          <img
+            src={randomIcon}
+            alt="random"
+            className="cursor-pointer"
+            onClick={onDraw}
+          />
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import MessageTeacherText from "../message/TeacherText";
 import MessageSystem from "../message/System";
 import MessageCheck from "../message/Check";
 import MessageOXQuiz from "../message/OXQuiz";
+import MessageDraw from "../message/Draw";
 
 // const messages = [
 //   {
@@ -65,6 +66,17 @@ const ChatMessages = ({ messages, toggleCheck, toggleOXQuiz }) => {
               oCount={msg.oCount}
               xCount={msg.xCount}
               toggleOXQuiz={toggleOXQuiz}
+            />
+          );
+        }
+
+        if (msg.type === "draw") {
+          return (
+            <MessageDraw
+              key={key}
+              id={msg.id}
+              winnerUsername={msg.winnerUsername}
+              isRelease={msg.isRelease}
             />
           );
         }
