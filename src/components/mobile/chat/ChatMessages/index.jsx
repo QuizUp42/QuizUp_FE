@@ -3,12 +3,13 @@ import MessageStudentText from "../message/StudentText";
 import MessageTeacherText from "../message/TeacherText";
 import MessageSystem from "../message/System";
 import MessageCheck from "../message/Check";
+import MessageOXQuiz from "../message/OXQuiz";
 
 // const messages = [
 //   {
 //     id: 1,
-//     type: "check",
-//     count: 3,
+//     type: "oxquiz",
+//     count: [12, 11],
 //     role: "student",
 //     isChecked: true,
 //   },
@@ -21,7 +22,7 @@ import MessageCheck from "../message/Check";
 //   },
 // ];
 
-const ChatMessages = ({ messages, toggleCheck }) => {
+const ChatMessages = ({ messages, toggleCheck, toggleOXQuiz }) => {
   console.log(messages);
   return (
     <div className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
@@ -51,6 +52,19 @@ const ChatMessages = ({ messages, toggleCheck }) => {
               count={msg.checkCount}
               role={msg.role}
               toggleCheck={toggleCheck}
+            />
+          );
+        }
+
+        if (msg.type === "oxquiz") {
+          return (
+            <MessageOXQuiz
+              key={key}
+              id={msg.id}
+              isChecked={msg.isChecked}
+              oCount={msg.oCount}
+              xCount={msg.xCount}
+              toggleOXQuiz={toggleOXQuiz}
             />
           );
         }
