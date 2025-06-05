@@ -33,11 +33,26 @@ export const useSocket = (role, roomId, token) => {
 
     socket.on(EVENTS.CHAT_MESSAGE, (msg) => {
       console.log("💬 새 메시지", msg);
-      setMessages((prev) => [...prev, msg]);
+      setMessages((prev) => [...prev, { ...msg, type: "chat" }]);
     });
 
     socket.on(EVENTS.CHECK_CREATED, (msg) => {
       console.log("✅ 새 체크 메세지", msg);
+      setMessages((prev) => [...prev, { ...msg, type: "check" }]);
+    });
+
+    socket.on(EVENTS.CHECK_TOGGLED, (msg) => {
+      console.log("✅ 토글 메세지 업데이트", msg);
+      const { id, checkCount, isChecked } = msg;
+
+      setMessages((prevMessages) =>
+        prevMessages.map((m) => {
+          if (m.type === "check" && m.id === id) {
+            return { ...m, checkCount, isChecked };
+          }
+          return m;
+        })
+      );
     });
 
     socket.onAny((event, ...args) => {
@@ -63,10 +78,19 @@ export const useSocket = (role, roomId, token) => {
     });
   };
 
+  const toggleCheck = (id, isChecked) => {
+    socketRef.current?.emit(EVENTS.CHECK_TOGGLE, {
+      room: roomId,
+      checkId: id,
+      isChecked: isChecked,
+    });
+  };
+
   return {
     messages,
     sendMessage,
     socketRef,
     sendCheck,
+    toggleCheck,
   };
 };

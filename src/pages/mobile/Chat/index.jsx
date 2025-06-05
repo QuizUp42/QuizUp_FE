@@ -12,11 +12,15 @@ const MobileChat = () => {
   const role = localStorage.getItem("role");
 
   console.log(roomId, token, role);
-  const { messages, sendMessage, sendCheck } = useSocket(role, roomId, token);
+  const { messages, sendMessage, sendCheck, toggleCheck } = useSocket(
+    role,
+    roomId,
+    token
+  );
 
   return (
     <div className="flex flex-col flex-1">
-      <ChatMessages messages={messages} />
+      <ChatMessages messages={messages} toggleCheck={toggleCheck} />
       <ChatInput role={role} onSend={sendMessage} onCheck={sendCheck} />
     </div>
   );
