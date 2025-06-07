@@ -1,0 +1,20 @@
+name: Sync to Personal Fork
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Push to personal fork
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote add fork https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/yundol777/QuizUp-FE.git
+          git push --force fork main
