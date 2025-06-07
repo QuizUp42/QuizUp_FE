@@ -16,5 +16,5 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git remote add fork https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/yundol777/QuizUp-FE.git
+          git remote add fork https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/yundol777/QuizUp_FE.git
           git push --force fork main
