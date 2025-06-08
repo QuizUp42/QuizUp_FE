@@ -6,28 +6,48 @@ import MessageCheck from "../message/Check";
 import MessageOXQuiz from "../message/OXQuiz";
 import MessageDraw from "../message/Draw";
 import MessageQuiz from "../message/Quiz";
-
-// const messages = [
-//   {
-//     id: 1,
-//     type: "oxquiz",
-//     count: [12, 11],
-//     role: "student",
-//     isChecked: true,
-//   },
-//   {
-//     id: 2,
-//     type: "check",
-//     count: 10,
-//     role: "professor",
-//     isChecked: false,
-//   },
-// ];
+import { useEffect, useRef } from "react";
 
 const ChatMessages = ({ messages, toggleCheck, toggleOXQuiz }) => {
-  console.log(messages);
+  const scrollRef = useRef(null);
+  const prevLengthRef = useRef(0);
+
+  const scrollToBottom = () => {
+    const el = scrollRef.current;
+    if (el) {
+      el.scrollTo({
+        top: el.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const isAtBottom = () => {
+    const el = scrollRef.current;
+    if (!el) return false;
+    const diff = el.scrollHeight - el.scrollTop - el.clientHeight;
+    return diff < 150;
+  };
+
+  // 초기 렌더 시
+  useEffect(() => {
+    if (messages.length > 0 && prevLengthRef.current === 0) {
+      requestAnimationFrame(() => scrollToBottom());
+    }
+  }, [messages]);
+
+  // 이후 메시지 증가 시
+  useEffect(() => {
+    if (messages.length > prevLengthRef.current) {
+      if (isAtBottom()) {
+        requestAnimationFrame(() => scrollToBottom());
+      }
+    }
+    prevLengthRef.current = messages.length;
+  }, [messages]);
+
   return (
-    <div className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
+    <div ref={scrollRef} className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
       {messages.map((msg) => {
         const key = `${msg.type}-${msg.id}`;
 
