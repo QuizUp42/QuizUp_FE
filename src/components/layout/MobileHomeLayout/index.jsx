@@ -19,7 +19,7 @@ const MobileHomeLayout = () => {
         <FaRankingStar className="w-6 h-6" />
         <BiMenu className="w-7.5 h-7.5" />
       </div>
-      <Outlet className="flex-1" />
+      <Outlet />
     </div>
   );
 };
