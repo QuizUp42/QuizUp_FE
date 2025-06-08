@@ -56,25 +56,37 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
             src={quizIcon}
             alt="quiz"
             className="cursor-pointer"
-            onClick={() => onQuiz(1)}
+            onClick={() => {
+              onQuiz(1);
+              setIsModalOpen(false);
+            }}
           />
           <img
             src={checkIcon}
             alt="check"
             className="cursor-pointer"
-            onClick={onCheck}
+            onClick={() => {
+              onCheck();
+              setIsModalOpen(false);
+            }}
           />
           <img
             src={oxIcon}
             alt="o/x"
             className="cursor-pointer"
-            onClick={onOXQuiz}
+            onClick={() => {
+              onOXQuiz();
+              setIsModalOpen(false);
+            }}
           />
           <img
             src={randomIcon}
             alt="random"
             className="cursor-pointer"
-            onClick={onDraw}
+            onClick={() => {
+              onDraw();
+              setIsModalOpen(false);
+            }}
           />
         </div>
       )}
