@@ -10,7 +10,7 @@ const mockClassData = {
 
 const MobileHomeLayout = () => {
   return (
-    <div className="bg-primary-base h-screen flex flex-col">
+    <div className="bg-primary-base h-[100dvh] flex flex-col overflow-hidden">
       <div className="flex items-center gap-4 py-2 px-4 bg-primary-dark text-primary-soft">
         <img src={icon} alt="app-icon" className="w-7 h-8.5" />
         <h1 className="flex-1 text-xs font-semibold">

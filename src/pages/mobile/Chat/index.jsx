@@ -31,7 +31,7 @@ const MobileChat = () => {
   } = useSocket(role, roomId, token);
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 overflow-hidden">
       <ChatMessages
         messages={messages}
         toggleCheck={toggleCheck}
