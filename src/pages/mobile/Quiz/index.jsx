@@ -71,7 +71,7 @@ const MobileQuiz = () => {
 
   useEffect(() => {
     if (remainingSeconds === 0) {
-      handleSubmit();
+      // handleSubmit();
     }
   }, [remainingSeconds]);
 

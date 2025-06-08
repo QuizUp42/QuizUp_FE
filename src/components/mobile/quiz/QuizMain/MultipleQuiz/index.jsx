@@ -1,6 +1,6 @@
 const MultipleQuiz = ({ questions, id, value, onChange }) => {
   return (
-    <div className="py-5 flex flex-col gap-2">
+    <div className="py-5 flex flex-col gap-2 flex-1">
       {questions.map((item, idx) => {
         const isSelected = value === item;
 
@@ -8,7 +8,7 @@ const MultipleQuiz = ({ questions, id, value, onChange }) => {
           <button
             key={idx}
             onClick={() => onChange(id, item)}
-            className={`w-full h-[76px] p-6 rounded-lg flex items-center justify-start transition-all cursor-pointer
+            className={`w-full max-h-[80px] p-6 flex-1 rounded-lg flex items-center justify-start transition-all cursor-pointer
               ${isSelected ? "bg-primary-soft" : "bg-primary-light"}
             `}
           >
