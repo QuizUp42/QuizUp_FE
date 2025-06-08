@@ -79,6 +79,11 @@ export const useSocket = (role, roomId, token) => {
       setMessages((prev) => [...prev, { ...msg, type: "draw" }]);
     });
 
+    socket.on(EVENTS.QUIZ_CREATED, (msg) => {
+      console.log("✅ 새 퀴즈 메세지", msg);
+      setMessages((prev) => [...prev, { ...msg, type: "quiz" }]);
+    });
+
     socket.onAny((event, ...args) => {
       console.log("[디버깅] 받은 이벤트:", event, args);
     });
@@ -130,6 +135,14 @@ export const useSocket = (role, roomId, token) => {
     });
   };
 
+  const sendQuiz = (quizId) => {
+    console.log(quizId);
+    socketRef.current?.emit(EVENTS.QUIZ_CREATE, {
+      room: roomId,
+      quizId: quizId,
+    });
+  };
+
   return {
     messages,
     sendMessage,
@@ -139,5 +152,6 @@ export const useSocket = (role, roomId, token) => {
     sendOXQuiz,
     toggleOXQuiz,
     sendDraw,
+    sendQuiz,
   };
 };

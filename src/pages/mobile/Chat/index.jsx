@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ChatInput from "../../../components/mobile/chat/ChatInput";
 import ChatMessages from "../../../components/mobile/chat/ChatMessages";
 
@@ -6,10 +7,16 @@ import { useParams } from "react-router-dom";
 
 const MobileChat = () => {
   const { roomId: paramRoomId } = useParams();
-  const roomId = paramRoomId;
+  const [roomId, setRoomId] = useState();
+  const [token, setToken] = useState();
+  const [role, setRole] = useState();
 
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  useEffect(() => {
+    setRoomId(paramRoomId);
+    setToken(localStorage.getItem("token"));
+    setRole(localStorage.getItem("role"));
+    console.log(roomId, token, role);
+  }, [paramRoomId, token, role, roomId]);
 
   console.log(roomId, token, role);
   const {
@@ -20,6 +27,7 @@ const MobileChat = () => {
     sendOXQuiz,
     toggleOXQuiz,
     sendDraw,
+    sendQuiz,
   } = useSocket(role, roomId, token);
 
   return (
@@ -35,6 +43,7 @@ const MobileChat = () => {
         onCheck={sendCheck}
         onOXQuiz={sendOXQuiz}
         onDraw={sendDraw}
+        onQuiz={sendQuiz}
       />
     </div>
   );
