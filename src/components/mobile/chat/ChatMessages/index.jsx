@@ -5,6 +5,7 @@ import MessageSystem from "../message/System";
 import MessageCheck from "../message/Check";
 import MessageOXQuiz from "../message/OXQuiz";
 import MessageDraw from "../message/Draw";
+import MessageQuiz from "../message/Quiz";
 
 // const messages = [
 //   {
@@ -77,6 +78,17 @@ const ChatMessages = ({ messages, toggleCheck, toggleOXQuiz }) => {
               id={msg.id}
               winnerUsername={msg.winnerUsername}
               isRelease={msg.isRelease}
+            />
+          );
+        }
+
+        if (msg.type === "quiz") {
+          return (
+            <MessageQuiz
+              key={key}
+              quizId={msg.quizId}
+              quizName={msg.quizName}
+              isSubmit={msg.isSubmit}
             />
           );
         }

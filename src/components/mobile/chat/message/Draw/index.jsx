@@ -10,7 +10,7 @@ const MessageDraw = ({ winnerUsername, isRelease: initialIsRelease }) => {
 
   return (
     <BaseTeacherText>
-      <div className="flex flex-col items-center gap-1 w-[155px] h-[70px]">
+      <div className="flex flex-col items-center gap-1 w-[155px] h-[80px]">
         {isRelease ? (
           <>
             <p className="text-base text-primary-soft font-semibold py-1">
