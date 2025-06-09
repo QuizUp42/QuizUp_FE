@@ -57,7 +57,7 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
             alt="quiz"
             className="cursor-pointer"
             onClick={() => {
-              onQuiz(1);
+              onQuiz(9);
               setIsModalOpen(false);
             }}
           />
