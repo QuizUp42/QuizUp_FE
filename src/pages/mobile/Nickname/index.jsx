@@ -11,6 +11,18 @@ const MobileNickname = () => {
 
   const [username, setUsername] = useState("");
 
+  // 랜덤 버튼 클릭 시 핸들러 : 랜덤한 닉네임 받아오기.
+  const handleGetNickname = async () => {
+    try {
+      const res = await instance.post("/auth/random-nickname");
+      setUsername(res.data.nickname);
+    } catch (err) {
+      console.error(err);
+      alert("랜덤 닉네임 불러오기 실패");
+    }
+  };
+
+  // 입장버튼 클릭 시 핸들러
   const handleSubmit = async () => {
     if (!username.trim()) {
       return alert("닉네임을 입력해주세요.");
@@ -46,7 +58,10 @@ const MobileNickname = () => {
           placeholder="슬픈 고양이"
           className=" w-full text-black font-bold placeholder:text-[#b6b6b6] placeholder:font-bold"
         />
-        <GiPerspectiveDiceSixFacesRandom className="w-7.5 h-7.5 text-system-text" />
+        <GiPerspectiveDiceSixFacesRandom
+          onClick={handleGetNickname}
+          className="w-7.5 h-7.5 text-system-text"
+        />
       </div>
       <button
         onClick={handleSubmit}
