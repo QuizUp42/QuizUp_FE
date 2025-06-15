@@ -1,20 +1,14 @@
 import { AiOutlineCheck } from "react-icons/ai";
 import BaseTeacherText from "../common/baseTeacherText";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuthStore } from "../../../../../stores/useAuthStore";
 
 const MessageCheck = ({ isChecked, id, count, toggleCheck }) => {
   const [isCheck, setIsCheck] = useState(isChecked);
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    setRole(storedRole);
-  }, []);
+  const role = useAuthStore((state) => state.role);
 
   const handleCheck = () => {
-    console.log(role);
     if (role === "student") {
-      console.log("여기는 들어와??");
       const newCheck = !isCheck;
       setIsCheck(newCheck);
       toggleCheck(id, newCheck);
