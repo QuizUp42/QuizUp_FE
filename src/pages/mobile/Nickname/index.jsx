@@ -1,27 +1,14 @@
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import icon from "../../../assets/icon.png";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRoomStore } from "../../../stores/useRoomStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import instance from "../../../libs/instance/axiosInstance";
 
 const MobileNickname = () => {
-  const { roomId } = useParams();
-  const { setRoomCode } = useRoomStore();
   const navigate = useNavigate();
+  const { roomId } = useParams();
+
   const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    if (roomId) {
-      setRoomCode(roomId);
-    }
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      navigate(`/mobile/signin`);
-    }
-  }, [roomId, navigate, setRoomCode]);
 
   const handleSubmit = async () => {
     if (!username.trim()) {
