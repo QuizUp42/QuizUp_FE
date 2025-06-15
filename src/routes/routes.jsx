@@ -12,6 +12,7 @@ import MobileQuiz from "../pages/mobile/Quiz";
 import MobileAnswer from "../pages/mobile/Answer";
 import MobileScore from "../pages/mobile/Score";
 import MobileSignIn from "../pages/mobile/SignIn";
+import MobileRoutes from "../pages/mobile/Routes";
 
 export const router = createBrowserRouter([
   {
@@ -29,11 +30,12 @@ export const router = createBrowserRouter([
       { path: "", element: <MobileEnter /> },
       { path: "signin", element: <MobileSignIn /> },
       { path: "signup", element: <MobileSignUp /> },
-      { path: ":roomId/nickname", element: <MobileNickname /> },
+      { path: ":roomCode", element: <MobileRoutes /> },
+      { path: ":roomCode/nickname", element: <MobileNickname /> },
     ],
   },
   {
-    path: "/mobile/:roomId",
+    path: "/mobile/:roomCode",
     element: <MobileHomeLayout />,
     children: [
       { path: "chat", element: <MobileChat /> },
