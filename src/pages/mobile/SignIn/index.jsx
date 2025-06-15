@@ -3,10 +3,12 @@ import logo from "../../../assets/logo.png";
 import publicInstance from "../../../libs/instance/publicInstance";
 import { useState } from "react";
 import { useRoomStore } from "../../../stores/useRoomStore";
+import { useAuthStore } from "../../../stores/useAuthStore";
 
 const MobileSignIn = () => {
   const navigate = useNavigate();
   const roomCode = useRoomStore((state) => state.roomCode);
+  const setAuth = useAuthStore((state) => state.Auth);
   console.log(roomCode);
 
   const [form, setForm] = useState({
@@ -29,15 +31,11 @@ const MobileSignIn = () => {
       const token = res.data.accessToken;
       const role = res.data.role;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
+      // 로그인 이후 로컬 스토리지 대신 전역 상태로 관리.
+      setAuth(token, role);
 
       alert("로그인 성공!", res);
-      if (role === "student") {
-        navigate(`/mobile/${roomCode}/nickname`);
-      } else if (role === "professor") {
-        navigate(`/mobile/${roomCode}/chat`);
-      }
+      navigate(`/mobile/${roomCode}`);
     } catch (err) {
       alert("로그인 실패..", err);
     }
