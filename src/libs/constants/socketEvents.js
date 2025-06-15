@@ -11,6 +11,9 @@ export const EVENTS = {
   // 서버 → 클라이언트: 채팅 이력 전송
   MESSAGES: "messages",
 
+  // 서버 -> 클라이언트: 이미지 전달
+  IMAGE_CREATED: "image:uploaded",
+
   // 클라이언트 → 서버: 기능 업데이트 요청
   FEATURE_UPDATE: "feature:update",
   // 서버 → 클라이언트: 기능 업데이트 알림

@@ -36,6 +36,11 @@ export const useSocket = (role, roomId, token) => {
       setMessages((prev) => [...prev, { ...msg, type: "chat" }]);
     });
 
+    socket.on(EVENTS.IMAGE_CREATED, (msg) => {
+      console.log("💬 새 이미지", msg);
+      setMessages((prev) => [...prev, { ...msg, type: "image" }]);
+    });
+
     socket.on(EVENTS.CHECK_CREATED, (msg) => {
       console.log("✅ 새 체크 메세지", msg);
       setMessages((prev) => [...prev, { ...msg, type: "check" }]);
