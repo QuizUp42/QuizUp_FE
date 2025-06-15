@@ -8,7 +8,7 @@ import { useAuthStore } from "../../../stores/useAuthStore";
 const MobileSignIn = () => {
   const navigate = useNavigate();
   const roomCode = useRoomStore((state) => state.roomCode);
-  const setAuth = useAuthStore((state) => state.Auth);
+  const setAuth = useAuthStore((state) => state.setAuth);
   console.log(roomCode);
 
   const [form, setForm] = useState({

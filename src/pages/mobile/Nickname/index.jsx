@@ -1,12 +1,13 @@
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import icon from "../../../assets/icon.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import instance from "../../../libs/instance/axiosInstance";
+import { useRoomStore } from "../../../stores/useRoomStore";
 
 const MobileNickname = () => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
+  const roomCode = useRoomStore((state) => state.roomCode);
 
   const [username, setUsername] = useState("");
 
@@ -21,7 +22,7 @@ const MobileNickname = () => {
       });
 
       alert("입장 성공!");
-      navigate(`/mobile/${roomId}/chat`);
+      navigate(`/mobile/${roomCode}/chat`);
     } catch (err) {
       console.error(err);
       alert("입장에 실패했습니다.");

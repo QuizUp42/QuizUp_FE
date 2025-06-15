@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
 import ChatInput from "../../../components/mobile/chat/ChatInput";
 import ChatMessages from "../../../components/mobile/chat/ChatMessages";
 
 import { useSocket } from "../../../hooks/useSocket";
-import { useParams } from "react-router-dom";
+import { useRoomStore } from "../../../stores/useRoomStore";
+import { useAuthStore } from "../../../stores/useAuthStore";
 
 const MobileChat = () => {
-  const { roomId: paramRoomId } = useParams();
-  const [roomId, setRoomId] = useState();
-  const [token, setToken] = useState();
-  const [role, setRole] = useState();
+  const { accessToken, role } = useAuthStore();
+  const { roomCode } = useRoomStore();
 
-  useEffect(() => {
-    setRoomId(paramRoomId);
-    setToken(localStorage.getItem("token"));
-    setRole(localStorage.getItem("role"));
-    console.log(roomId, token, role);
-  }, [paramRoomId, token, role, roomId]);
+  console.log(roomCode, accessToken, role);
 
-  console.log(roomId, token, role);
   const {
     messages,
     sendMessage,
@@ -28,7 +20,7 @@ const MobileChat = () => {
     toggleOXQuiz,
     sendDraw,
     sendQuiz,
-  } = useSocket(role, roomId, token);
+  } = useSocket(role, roomCode, accessToken);
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden">

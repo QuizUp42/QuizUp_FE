@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BaseTeacherText from "../common/baseTeacherText";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiCircle } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
+import { useAuthStore } from "../../../../../stores/useAuthStore";
 
 const MessageOXQuiz = ({ isChecked, xCount, oCount, toggleOXQuiz, id }) => {
   const [selected, setSelected] = useState(isChecked);
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    setRole(storedRole);
-  }, []);
+  const role = useAuthStore((state) => state.role);
 
   const handleCheck = (choice) => {
     if (role !== "student") return;
@@ -38,7 +34,7 @@ const MessageOXQuiz = ({ isChecked, xCount, oCount, toggleOXQuiz, id }) => {
             />
           </div>
           <div>
-            {selected !== null && (
+            {(role === "professor" || selected !== null) && (
               <p className="text-base font-semibold text-primary-white leading-4">
                 {oCount}
               </p>
@@ -59,7 +55,7 @@ const MessageOXQuiz = ({ isChecked, xCount, oCount, toggleOXQuiz, id }) => {
             />
           </div>
           <div>
-            {selected !== null && (
+            {(role === "professor" || selected !== null) && (
               <p className="text-base font-semibold text-primary-white leading-4">
                 {xCount}
               </p>
