@@ -18,9 +18,10 @@ const MessageQuiz = ({ quizId, quizName, isSubmit }) => {
       <div className="flex flex-col items-start gap-1 w-[155px] h-[80px]">
         {isSubmit ? (
           <>
-            <p className="text-base px-2 text-primary-soft font-semibold py-1">
-              {quizName}
-            </p>
+            <div className="w-full flex items-center justify-between text-base px-2 text-primary-soft font-semibold py-2">
+              <p>문제 1</p>
+              <p>30s</p>
+            </div>
             <button
               onClick={handleOnAnswer}
               className="w-full p-2 rounded-lg bg-primary-white cursor-pointer"

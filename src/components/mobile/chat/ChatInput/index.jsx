@@ -5,8 +5,12 @@ import quizIcon from "../../../../assets/quiz_icon.png";
 import checkIcon from "../../../../assets/check_icon.png";
 import oxIcon from "../../../../assets/ox_icon.png";
 import randomIcon from "../../../../assets/random_icon.png";
+import instance from "../../../../libs/instance/axiosInstance";
+import { useRoomStore } from "../../../../stores/useRoomStore";
 
 const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
+  const roomCode = useRoomStore((state) => state.roomCode);
+
   const [text, setText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,6 +27,33 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
     }
   };
 
+  const handleImageSend = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      // Presigned URL 요청
+      const qs = new URLSearchParams({
+        fileName: file.name,
+        contentType: file.type,
+      });
+
+      const res = await instance.get(`/rooms/17/images/upload-url?${qs}`);
+
+      console.log(res);
+
+      // S3에 직접 업로드
+      await fetch(res.data.uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+    } catch (err) {
+      console.error("업로드 실패:", err);
+      alert("업로드 실패");
+    }
+  };
+
   return (
     <div className="p-3 relative">
       <div className="flex items-center px-3 py-1.5 gap-2 text-primary-soft border border-primary-border rounded-xl">
@@ -34,7 +65,16 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
             onClick={() => setIsModalOpen(!isModalOpen)}
           />
         ) : (
-          <BiSolidImageAdd className="w-5 h-5 cursor-pointer" />
+          <label htmlFor="imageUpload">
+            <BiSolidImageAdd className="w-5 h-5 cursor-pointer" />
+            <input
+              type="file"
+              id="imageUpload"
+              accept=".jpg, .png"
+              className="hidden"
+              onChange={handleImageSend}
+            />
+          </label>
         )}
         <input
           type="text"
@@ -51,13 +91,23 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
       </div>
 
       {isModalOpen && (
-        <div className="absolute ml-3 top-0 left-0 -translate-y-full px-6 py-0 bg-primary-dark rounded-full flex items-center justify-between w-[200px] h-[48px] border border-primary-border shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-5">
+        <div className="absolute ml-3 top-0 left-0 -translate-y-full px-6 py-0 bg-primary-dark rounded-full flex items-center justify-between gap-4 h-[48px] border border-primary-border shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] z-5">
+          <label htmlFor="imageUpload">
+            <BiSolidImageAdd className="w-5 h-5 cursor-pointer text-primary-soft" />
+            <input
+              type="file"
+              id="imageUpload"
+              accept=".jpg, .png"
+              className="hidden"
+              onChange={handleImageSend}
+            />
+          </label>
           <img
             src={quizIcon}
             alt="quiz"
             className="cursor-pointer"
             onClick={() => {
-              onQuiz(9);
+              onQuiz(17);
               setIsModalOpen(false);
             }}
           />

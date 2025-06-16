@@ -114,15 +114,7 @@ const ChatMessages = ({ messages, toggleCheck, toggleOXQuiz }) => {
         }
 
         if (msg.type === "image") {
-          return (
-            <MessageImage
-              key={key}
-              name={msg.name}
-              image={msg.image}
-              time={msg.time}
-              sender={msg.sender}
-            />
-          );
+          return <MessageImage key={key} image={msg.url} sender={msg.sender} />;
         }
 
         if (msg.type === "system") {

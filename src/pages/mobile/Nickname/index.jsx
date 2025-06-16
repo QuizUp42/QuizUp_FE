@@ -1,28 +1,28 @@
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import icon from "../../../assets/icon.png";
-import { useNavigate, useParams } from "react-router-dom";
-import { useRoomStore } from "../../../stores/useRoomStore";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import instance from "../../../libs/instance/axiosInstance";
+import { useRoomStore } from "../../../stores/useRoomStore";
 
 const MobileNickname = () => {
-  const { roomId } = useParams();
-  const { setRoomCode } = useRoomStore();
   const navigate = useNavigate();
+  const roomCode = useRoomStore((state) => state.roomCode);
+
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    if (roomId) {
-      setRoomCode(roomId);
+  // 랜덤 버튼 클릭 시 핸들러 : 랜덤한 닉네임 받아오기.
+  const handleGetNickname = async () => {
+    try {
+      const res = await instance.post("/auth/random-nickname");
+      setUsername(res.data.nickname);
+    } catch (err) {
+      console.error(err);
+      alert("랜덤 닉네임 불러오기 실패");
     }
+  };
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      navigate(`/mobile/signin`);
-    }
-  }, [roomId, navigate, setRoomCode]);
-
+  // 입장버튼 클릭 시 핸들러
   const handleSubmit = async () => {
     if (!username.trim()) {
       return alert("닉네임을 입력해주세요.");
@@ -34,7 +34,7 @@ const MobileNickname = () => {
       });
 
       alert("입장 성공!");
-      navigate(`/mobile/${roomId}/chat`);
+      navigate(`/mobile/${roomCode}/chat`);
     } catch (err) {
       console.error(err);
       alert("입장에 실패했습니다.");
@@ -58,7 +58,10 @@ const MobileNickname = () => {
           placeholder="슬픈 고양이"
           className=" w-full text-black font-bold placeholder:text-[#b6b6b6] placeholder:font-bold"
         />
-        <GiPerspectiveDiceSixFacesRandom className="w-7.5 h-7.5 text-system-text" />
+        <GiPerspectiveDiceSixFacesRandom
+          onClick={handleGetNickname}
+          className="w-7.5 h-7.5 text-system-text"
+        />
       </div>
       <button
         onClick={handleSubmit}
