@@ -38,9 +38,7 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
         contentType: file.type,
       });
 
-      const res = await instance.get(
-        `/rooms/${roomCode}/images/upload-url?${qs}`
-      );
+      const res = await instance.get(`/rooms/17/images/upload-url?${qs}`);
 
       console.log(res);
 
@@ -109,7 +107,7 @@ const ChatInput = ({ role, onSend, onCheck, onOXQuiz, onDraw, onQuiz }) => {
             alt="quiz"
             className="cursor-pointer"
             onClick={() => {
-              onQuiz(1);
+              onQuiz(17);
               setIsModalOpen(false);
             }}
           />
